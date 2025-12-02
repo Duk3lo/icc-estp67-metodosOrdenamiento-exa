@@ -1,16 +1,20 @@
 package models;
 
 public class Brand {
-    private String name;
-    private CarModel[] models;
+    private final String brandName;
+    private final CarModel[] models;
 
-    public Brand(String name, CarModel[] models) {
-        this.name = name;
+    public Brand(String brandName, CarModel[] models) {
+        this.brandName = brandName;
         this.models = models;
     }
 
+    public String getBrandName() {
+        return brandName;
+    }
+
     public String getName() {
-        return name;
+        return brandName;
     }
 
     public CarModel[] getModels() {
@@ -18,12 +22,12 @@ public class Brand {
     }
 
     public int getTotalValidYears() {
-        int total = 0;
         if (models == null) return 0;
-        for (CarModel model : models) {
-            if (model == null || model.getYears() == null) continue;
-            for (CarYear cy : model.getYears()) {
-                if (cy != null && cy.isValid()) total++;
+        int total = 0;
+        for (CarModel m : models) {
+            if (m == null || m.getYears() == null) continue;
+            for (CarYear y : m.getYears()) {
+                if (y != null && y.isValid()) total++;
             }
         }
         return total;
@@ -31,6 +35,6 @@ public class Brand {
 
     @Override
     public String toString() {
-        return name + " - Años válidos: " + getTotalValidYears();
+        return brandName + " - Años válidos: " + getTotalValidYears();
     }
 }
